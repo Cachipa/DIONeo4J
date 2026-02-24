@@ -1,3 +1,10 @@
+CREATE CONSTRAINT usuario_id IF NOT EXISTS FOR (u:Usuario) REQUIRE u.id IS UNIQUE;
+CREATE CONSTRAINT filme_id IF NOT EXISTS FOR (f:Filme) REQUIRE f.id IS UNIQUE;
+CREATE CONSTRAINT serie_id IF NOT EXISTS FOR (s:Serie) REQUIRE s.id IS UNIQUE;
+CREATE CONSTRAINT genero_nome IF NOT EXISTS FOR (g:Genero) REQUIRE g.nome IS UNIQUE;
+CREATE CONSTRAINT ator_nome IF NOT EXISTS FOR (a:Ator) REQUIRE a.nome IS UNIQUE;
+CREATE CONSTRAINT diretor_nome IF NOT EXISTS FOR (d:Diretor) REQUIRE d.nome IS UNIQUE;
+
 CREATE (n21:Genero {nome: "Ficção Científica"})<-[:IN_GENRE]-(n19:Filme {id: "f9", titulo: "Avatar", ano: 2009})<-[:WATCHED {avaliacao: 5}]-(:Usuario {id: "u9", nome: "Bruno Alves", idade: 24})-[:WATCHED {avaliacao: 10}]->(n17:Filme {id: "f7", titulo: "Interstellar", ano: 2014})<-[:WATCHED {avaliacao: 10}]-(:Usuario {id: "u1", nome: "Carlos Silva", idade: 28})-[:WATCHED {avaliacao: 9}]->(n11:Filme {id: "f1", titulo: "Inception", ano: 2010})<-[:WATCHED {avaliacao: 8}]-(n5:Usuario {id: "u5", nome: "Lucas Ferreira", idade: 19}),
 (n7:Usuario {id: "u7", nome: "Rafael Mendes", idade: 27})-[:WATCHED {avaliacao: 10}]->(n13:Filme {id: "f3", titulo: "Pulp Fiction", ano: 1994})<-[:WATCHED {avaliacao: 7}]-(:Usuario {id: "u2", nome: "Ana Souza", idade: 34})-[:WATCHED {avaliacao: 8}]->(n15:Filme {id: "f5", titulo: "Titanic", ano: 1997})<-[:WATCHED {avaliacao: 7}]-(n7),
 (n24:Genero {nome: "Drama"})<-[:IN_GENRE]-(n20:Filme {id: "f10", titulo: "Goodfellas", ano: 1990})<-[:WATCHED {avaliacao: 8}]-(:Usuario {id: "u8", nome: "Fernanda Lima", idade: 38})-[:WATCHED {avaliacao: 9}]->(n18:Filme {id: "f8", titulo: "Oppenheimer", ano: 2023})<-[:WATCHED {avaliacao: 9}]-(:Usuario {id: "u3", nome: "Pedro Oliveira", idade: 22})-[:WATCHED {avaliacao: 10}]->(n12:Filme {id: "f2", titulo: "The Dark Knight", ano: 2008})<-[:WATCHED {avaliacao: 9}]-(n6:Usuario {id: "u6", nome: "Juliana Rocha", idade: 31}),
