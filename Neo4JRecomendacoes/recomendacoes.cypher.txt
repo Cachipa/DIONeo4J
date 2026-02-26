@@ -1,0 +1,41 @@
+
+CREATE (usuario1:Usuario {id: 1, nome: "Daniel"})
+CREATE (usuario2:Usuario {id: 2, nome: "Ana"})
+
+CREATE (artista1:Artista {id: 1, nome: "Banda Rock"})
+CREATE (artista2:Artista {id: 2, nome: "Cantor Pop"})
+
+CREATE (generoRock:Genero {nome: "Rock"})
+CREATE (generoPop:Genero {nome: "Pop"})
+
+CREATE (musica1:Musica {id: 1, titulo: "Rock Pesado"})
+CREATE (musica2:Musica {id: 2, titulo: "Rock Leve"})
+CREATE (musica3:Musica {id: 3, titulo: "Pop Animado"})
+CREATE (musica4:Musica {id: 4, titulo: "Novo Rock"})
+
+CREATE (musica1)-[:DO_ARTISTA]->(artista1)
+CREATE (musica2)-[:DO_ARTISTA]->(artista1)
+CREATE (musica3)-[:DO_ARTISTA]->(artista2)
+CREATE (musica4)-[:DO_ARTISTA]->(artista1)
+
+CREATE (musica1)-[:DO_GENERO]->(generoRock)
+CREATE (musica2)-[:DO_GENERO]->(generoRock)
+CREATE (musica3)-[:DO_GENERO]->(generoPop)
+CREATE (musica4)-[:DO_GENERO]->(generoRock)
+
+CREATE (usuario1)-[:ESCUTOU {vezes: 10}]->(musica1)
+CREATE (usuario1)-[:CURTIU]->(musica1)
+
+CREATE (usuario2)-[:ESCUTOU {vezes: 5}]->(musica1)
+CREATE (usuario2)-[:ESCUTOU {vezes: 8}]->(musica3)
+CREATE (usuario2)-[:CURTIU]->(musica3)
+
+#Recomendação
+MATCH (usuario:Usuario {id: 1})-[:ESCUTOU]->(musicaEscutada:Musica)-[:DO_GENERO]->(genero:Genero)
+MATCH (genero)<-[:DO_GENERO]-(musicaRecomendada:Musica)
+WHERE NOT (usuario)-[:ESCUTOU]->(musicaRecomendada)
+RETURN 
+    musicaRecomendada.titulo AS titulo,
+    COUNT(*) AS pontuacao
+ORDER BY pontuacao DESC
+LIMIT 5
